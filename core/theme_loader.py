@@ -14,9 +14,13 @@ THEME_CSS_TEMPLATE = """
 """
 
 def compile_themes(theme_dir: str, static_dir: str) -> None:
-    Path(str(static_dir)).mkdir(parents=True, exist_ok=True)   # ← str() fix
+    # Ensure we have plain strings
+    theme_dir = str(theme_dir)
+    static_dir = str(static_dir)
+
+    Path(static_dir).mkdir(parents=True, exist_ok=True)
     for path in Path(theme_dir).glob("*.json"):
         with open(path, encoding="utf-8") as fp:
-            cfg: Dict[str, Any] = json.load(fp)["palette"]
+            cfg = json.load(fp)["palette"]
         css = THEME_CSS_TEMPLATE.format(**cfg)
         (Path(static_dir) / f"{path.stem}.css").write_text(css, encoding="utf-8")
