@@ -1,4 +1,4 @@
-"""JSON → CSS theme engine."""
+# core/theme_loader.py
 from __future__ import annotations
 import json, os
 from pathlib import Path
@@ -14,7 +14,7 @@ THEME_CSS_TEMPLATE = """
 """
 
 def compile_themes(theme_dir: str, static_dir: str) -> None:
-    Path(static_dir).mkdir(parents=True, exist_ok=True)
+    Path(str(static_dir)).mkdir(parents=True, exist_ok=True)   # ← str() fix
     for path in Path(theme_dir).glob("*.json"):
         with open(path, encoding="utf-8") as fp:
             cfg: Dict[str, Any] = json.load(fp)["palette"]
