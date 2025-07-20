@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ lab }} Item Details</h2>
+<ul>
+  {% for key, value in item.items() %}
+    <li><strong>{{ key|capitalize }}:</strong> {{ value }}</li>
+  {% endfor %}
+</ul>
+<a href="/">Back to Dashboard</a>
+{% endblock %}
