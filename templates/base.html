@@ -19,15 +19,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="labsDropdown" role="button" data-bs-toggle="dropdown">
-                            Labs
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url_for('user.lab_view', lab_name='physics') }}">Physics Lab</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('user.lab_view', lab_name='chemistry') }}">Chemistry Lab</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('user.lab_view', lab_name='biology') }}">Biology Lab</a></li>
-                        </ul>
+                    <!-- Labs dropdown removed -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
                     </li>
                 </ul>
             </div>

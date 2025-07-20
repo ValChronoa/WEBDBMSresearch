@@ -34,6 +34,13 @@
       "password_hash": "scrypt:32768:8:1$EHlTldSSAfhW9Nav$c3764f23c164c0c968786a793d410914e22c3afa28d36242c35fa4f28e5ecbadcdc040eb797cec584fb87dfcbd14ac1e7d25ba2aa130ad4c30a6064d6b61475d",
       "role": "admin",
       "lab": null
+    },
+    "0f57c405": {
+      "id": "07148a14",
+      "username": "stephen",
+      "password_hash": "scrypt:32768:8:1$M6jZ3BOgj4UUkO3i$188cc18f309315cccdea1f97ab29a751d9585f4f356c97a54f8c226a21544bd9ea86864fd57e31ad853617aa5e9d21512d03a57e2523ad9743a361e58bfe868c",
+      "role": "user",
+      "lab": null
     }
   }
 }

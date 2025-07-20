@@ -1,8 +1,10 @@
 from flask import Blueprint, redirect, url_for, session 
+from core.decorators import role_required
 
 main_bp = Blueprint('main', __name__)
 
 @main_bp.route("/")
+@role_required("user")
 def index():
     """Root entry point: auto-route by role."""
     if "uid" not in session:

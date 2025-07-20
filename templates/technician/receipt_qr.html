@@ -5,8 +5,7 @@
   <p><strong>Borrowed by:</strong> {{ payload.borrowed_by }}</p>
   <p><strong>Due:</strong> {{ payload.return_due }}</p>
 
-  <!-- QR for student phone -->
-  <img src="{{ url_for('api.qr_generate', lab=payload.lab, item_id=payload.item_id) }}"
+  <img src="{{ url_for('qr.generate', lab=payload.lab, item_id=payload.item_id) }}"
        alt="QR receipt" class="img-fluid" style="max-width:200px;">
   <p class="mt-2 small">Scan with your phone to track this loan.</p>
 </div>

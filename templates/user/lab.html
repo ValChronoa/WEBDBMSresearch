@@ -10,6 +10,10 @@
           &larr; Back to labs
         </a>
       </div>
+      <form method="get" class="mb-3 d-flex" action="">
+        <input type="text" name="q" class="form-control me-2" placeholder="Search inventory..." value="{{ request.args.get('q', '') }}">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </form>
 
       {% if items %}
       <div class="table-responsive">
@@ -22,21 +26,20 @@
               <th>Status</th>
             </tr>
           </thead>
-          <tbody>
-            {% for item in items %}
-            <tr>
-              <td>{{ item.id }}</td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.quantity }}</td>
-              <td>
-                <a href="{{ url_for('user.status', lab_name=lab_name, item_id=item.id) }}"
-                   class="btn btn-sm btn-info">
-                  View Details
-                </a>
-              </td>
-            </tr>
+            <tbody>
+            {% for row in items %}
+                {% if row.quantity > 0 %}
+                <tr>
+                <td>{{ row.name }}</td>
+                <td>{{ row.quantity }}</td>
+                <td>
+                    <a href="{{ url_for('user.status', lab_name=lab_name, item_id=row.id) }}"
+                    class="btn btn-sm btn-outline-primary">Details</a>
+                </td>
+                </tr>
+                {% endif %}
             {% endfor %}
-          </tbody>
+            </tbody>
         </table>
       </div>
       {% else %}

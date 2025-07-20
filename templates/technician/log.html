@@ -2,30 +2,66 @@
 {% block content %}
 <div class="container mt-4">
   <h2>{{ lab|capitalize }} – Borrow / Return Log</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Item</th><th>Borrowed&nbsp;by</th><th>Borrowed&nbsp;on</th>
-        <th>Status</th><th>Receipt</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for row in items %}
-        {% if row.borrowed_by %}
+
+  {% if items %}
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
         <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Qty</th>
+          <th>Borrowed&nbsp;Qty</th>
+          <th>Borrowed&nbsp;by</th>
+          <th>Borrowed&nbsp;on</th>
+          <th>Status</th>
+          <th>Notes</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in items %}
+        <tr>
+          <td>{{ row.id }}</td>
           <td>{{ row.name }}</td>
-          <td>{{ row.borrowed_by }}</td>
+          <td>{{ row.quantity }}</td>
+          <td>{{ row.borrow_quantity or '-' }}</td>
+          <td>{{ row.borrowed_by or '-' }}</td>
           <td>{{ row.borrowed_on or '-' }}</td>
-          <td>{{ 'Returned' if row.returned_on else 'Out' }}</td>
           <td>
-            <a href="{{ url_for('tech.receipt', lab=lab, item_id=row.id) }}"
-               class="btn btn-sm btn-outline-success">QR&nbsp;Receipt</a>
+            {% if row.returned_on %}
+              <span class="badge bg-success">Returned</span>
+            {% elif row.borrowed_by %}
+              <span class="badge bg-warning">Out</span>
+            {% else %}
+              <span class="badge bg-secondary">Available</span>
+            {% endif %}
+          </td>
+          <td>{{ row.return_notes or '-' }}</td>
+
+          <td>
+            {% if row.borrowed_by and not row.returned_on %}
+              <form method="post"
+                    action="{{ url_for('tech.mark_returned', lab=lab, item_id=row.id) }}"
+                    class="d-inline">
+                <input type="text"
+                       name="notes"
+                       placeholder="notes"
+                       required
+                       class="form-control form-control-sm w-auto d-inline">
+                <button class="btn btn-sm btn-primary ms-1">Return</button>
+              </form>
+            {% endif %}
           </td>
         </tr>
-        {% endif %}
-      {% endfor %}
-    </tbody>
-  </table>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="alert alert-info">No items in this lab yet.</div>
+  {% endif %}
+
   <a href="{{ url_for('tech.dashboard') }}" class="btn btn-secondary">← Back</a>
 </div>
 {% endblock %}
