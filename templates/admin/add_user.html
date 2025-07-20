@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4" style="max-width: 500px">
+  <h2>Add User</h2>
+  <form method="post">
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input type="text" name="username" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input type="password" name="password" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Role</label>
+      <select name="role" class="form-select" required>
+        <option value="user">Student</option>
+        <option value="technician">Technician</option>
+        <option value="admin">Administrator</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Lab (only for technician)</label>
+      <select name="lab" class="form-select">
+        <option value="">—</option>
+        <option value="physics">Physics</option>
+        <option value="chemistry">Chemistry</option>
+        <option value="biology">Biology</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Create</button>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

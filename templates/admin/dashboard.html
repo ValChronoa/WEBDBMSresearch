@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Admin Dashboard</h2>
+
+  <div class="row mb-4">
+    {% for lab, count in stats.items() %}
+    <div class="col-md-4">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">{{ lab|capitalize }} Lab</h5>
+          <p class="card-text">{{ count }} items</p>
+          <a href="{{ url_for('admin.lab_view', lab_name=lab) }}" class="btn btn-primary">
+            Manage Items
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header">
+      <strong>Users</strong>
+      <a href="{{ url_for('admin.add_user') }}" class="btn btn-sm btn-success float-end">
+        + Add User
+      </a>
+    </div>
+    <div class="card-body">
+      {% if users %}
+      <table class="table table-sm">
+        <thead><tr><th>ID</th><th>Username</th><th>Role</th><th>Lab</th><th></th></tr></thead>
+        <tbody>
+          {% for uid, u in users.items() %}
+          <tr>
+            <td>{{ uid[:6] }}…</td>
+            <td>{{ u.username }}</td>
+            <td>{{ u.role }}</td>
+            <td>{{ u.lab or "—" }}</td>
+            <td>
+              <a href="{{ url_for('admin.delete_user', uid=uid) }}"
+                 class="btn btn-sm btn-outline-danger"
+                 onclick="return confirm('Delete {{ u.username }}?')">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="text-muted">No users yet.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
