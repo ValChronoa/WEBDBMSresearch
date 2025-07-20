@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Edit Item in {{ lab|capitalize }} Inventory</h2>
+  <form method="post">
+    {% for field in lab_fields %}
+      {% if field != 'id' and field != 'borrowed_by' and field != 'borrowed_on' and field != 'returned_on' and field != 'return_notes' %}
+      <div class="mb-3">
+        <label for="{{ field }}" class="form-label">{{ field.replace('_', ' ')|capitalize }}</label>
+        <input type="text" class="form-control" id="{{ field }}" name="{{ field }}" value="{{ item[field] if item[field] is defined else '' }}" {% if field == 'name' or field == 'quantity' %}required{% endif %}>
+      </div>
+      {% endif %}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="{{ url_for('tech.dashboard') }}" class="btn btn-secondary ms-2">Cancel</a>
+  </form>
+</div>
+{% endblock %}
