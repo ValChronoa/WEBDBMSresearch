@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, send_file
 import qrcode, io, base64, cv2, numpy as np
 
 bp = Blueprint("qr", __name__, url_prefix="/api/qr")
