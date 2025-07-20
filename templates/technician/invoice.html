@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Invoice – {{ lab|capitalize }} Lab</h2>
+
+  {% if item %}
+    <pre>{{ item | tojson(indent=2) }}</pre>
+    <!-- Replace with proper invoice layout later -->
+  {% else %}
+    <div class="alert alert-warning">Item not found.</div>
+  {% endif %}
+
+  <a href="{{ url_for('tech.dashboard') }}" class="btn btn-outline-secondary">Back</a>
+</div>
+{% endblock %}
