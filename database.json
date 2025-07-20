@@ -1,0 +1,35 @@
+{
+  "chemistry": {
+    "a1b2c3d4": {
+      "name": "HCl 1 M",
+      "quantity": "10",
+      "expiration_date": "12-31-2025",
+      "supplier": "TechChem",
+      "hazard_class": "Corrosive"
+    }
+  },
+  "biology": {
+    "b2c3d4e5": {
+      "name": "E. coli stock",
+      "quantity": "5",
+      "storage_temp": "-20 \u00b0C",
+      "biohazard_level": "1"
+    }
+  },
+  "physics": {
+    "fd404957": {
+      "name": "Inhaler ni Lebron",
+      "quantity": "3",
+      "manufacturer": "Buston Silteks",
+      "model_number": "1004",
+      "serial_number": "7999403",
+      "location": "Palawan",
+      "calibration_due": "12-01-2023",
+      "last_calibration": "12-04-2025",
+      "condition": "Good",
+      "current_user": "Lyka Nurjan Hamid",
+      "usage_log": "Yes sir",
+      "notes": "N/A"
+    }
+  }
+}

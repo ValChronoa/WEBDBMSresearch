@@ -5,3 +5,4 @@ pywebpush==1.14.0
 PyJWT==2.8.0
 WeasyPrint==60.2
 python-dateutil==2.9.0
+qrcode[pil]==7.4.2

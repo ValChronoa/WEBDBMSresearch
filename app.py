@@ -11,9 +11,8 @@ import routes
 def create_app() -> Flask:
     app = Flask(__name__)
     app.config.from_object(Config)
-    cfg = app.config
-    compile_themes(cfg.get("THEME_DIR", "themes"),
-                    cfg.get("STATIC_THEME_DIR", "static/themes"))
+    config = Config()
+    compile_themes(config.THEME_DIR, config.STATIC_THEME_DIR)
 
     # storage
     app.storage = StorageManager(app.config["DATABASE_PATH"])
