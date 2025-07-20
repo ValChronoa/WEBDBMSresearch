@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>{{ lab|capitalize }} – Borrow / Return Log</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Item</th><th>Borrowed&nbsp;by</th><th>Borrowed&nbsp;on</th>
+        <th>Status</th><th>Receipt</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in items %}
+        {% if row.borrowed_by %}
+        <tr>
+          <td>{{ row.name }}</td>
+          <td>{{ row.borrowed_by }}</td>
+          <td>{{ row.borrowed_on or '-' }}</td>
+          <td>{{ 'Returned' if row.returned_on else 'Out' }}</td>
+          <td>
+            <a href="{{ url_for('tech.receipt', lab=lab, item_id=row.id) }}"
+               class="btn btn-sm btn-outline-success">QR&nbsp;Receipt</a>
+          </td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{{ url_for('tech.dashboard') }}" class="btn btn-secondary">← Back</a>
+</div>
+{% endblock %}
