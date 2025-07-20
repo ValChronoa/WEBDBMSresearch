@@ -7,4 +7,5 @@ WeasyPrint==60.2
 python-dateutil==2.9.0
 qrcode[pil]==7.4.2
 numpy==1.26.4
-opencv-python==4.9.0.0
+opencv-python==4.9.0.80
+gevent
