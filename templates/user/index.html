@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Student / Public Dashboard</h2>
+<div class="row">
+  {% for lab in labs %}
+  <div class="col-md-4">
+    <div class="card text-center">
+      <h5>{{ lab|capitalize }} Lab</h5>
+      <p>{{ stats[lab] }} items</p>
+      <a href="{{ url_for('user.lab_view', lab_name=lab) }}" class="btn btn-info">View Items</a>
+      <a href="{{ url_for('user.status', lab_name=lab, item_id='all') }}" class="btn btn-outline-warning">Check Status</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -6,7 +6,16 @@ from core.theme_loader import compile_themes
 from auth.routes import bp as auth_bp
 from api.analytics import bp as analytics_bp
 from api.mobile import bp as mobile_bp
+from roles.user.blueprint import bp as user_bp
+from roles.technician.blueprint import bp as tech_bp
+from roles.admin.blueprint import bp as admin_bp
+from api.qr import bp as qr_bp
 import routes
+
+app.register_blueprint(user_bp)
+app.register_blueprint(tech_bp)
+app.register_blueprint(admin_bp)
+app.register_blueprint(qr_bp)
 
 def create_app() -> Flask:
     app = Flask(__name__)
