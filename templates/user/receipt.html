@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Loan Details</h2>
+  <table class="table">
+    <tr><th>Item</th><td>{{ item.name }}</td></tr>
+    <tr><th>Borrowed on</th><td>{{ item.borrowed_on }}</td></tr>
+    <tr><th>Status</th><td>{{ 'Returned' if item.returned_on else 'Outstanding' }}</td></tr>
+  </table>
+</div>
+{% endblock %}
