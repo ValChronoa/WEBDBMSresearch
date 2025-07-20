@@ -1,27 +1,29 @@
-/* static/js/qr.js - QR scanner/generator helpers */
+/* static/js/qr.js */
+/* QR generator + live camera scanner helpers */
 
-// --- GENERATE QR IMAGE ---
+/* ---------- GENERATE ---------- */
 function makeQR(lab, itemId) {
   const img = document.getElementById('qr-img');
-  if (img) {
-    img.src = `/api/qr/generate/${lab}/${itemId}`;
-  }
+  if (!img) return;
+  img.src = `/api/qr/generate/${lab}/${itemId}`;
+  img.style.display = 'block';
 }
 
-// --- CAMERA SCANNER ---
+/* ---------- SCAN ---------- */
 async function startScanner(onResult) {
   const video = document.getElementById('qr-video');
   if (!video) return;
 
   const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
   video.srcObject = stream;
+  video.style.display = 'block';
   await video.play();
 
   const canvas = document.createElement('canvas');
   const ctx     = canvas.getContext('2d');
 
-  const loop = () => {
-    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+  const tick = () => {
+    if (video.readyState >= video.HAVE_ENOUGH_DATA) {
       canvas.width  = video.videoWidth;
       canvas.height = video.videoHeight;
       ctx.drawImage(video, 0, 0);
@@ -31,10 +33,15 @@ async function startScanner(onResult) {
         fd.append('image', blob);
         fetch('/api/qr/decode', { method: 'POST', body: fd })
           .then(r => r.json())
-          .then(({ data }) => data && onResult(data));
+          .then(({ data }) => {
+            if (data) {
+              onResult(data);
+              stream.getTracks().forEach(t => t.stop());
+            }
+          });
       });
     }
-    requestAnimationFrame(loop);
+    requestAnimationFrame(tick);
   };
-  loop();
+  tick();
 }

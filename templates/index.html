@@ -2,33 +2,7 @@
 
 {% block content %}
 <div class="container mt-4">
-  <div class="row">
-    <div class="col-md-8 mx-auto">
-      <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
-          <h2 class="mb-0">Laboratory Inventory System</h2>
-        </div>
-        <div class="card-body">
-          <p class="lead">Manage inventory for physics, chemistry, and biology laboratories</p>
-
-          <div class="row mt-4">
-            {% for lab in labs %}
-            <div class="col-md-4 mb-3">
-              <div class="card">
-                <div class="card-body text-center">
-                  <h5 class="card-title">{{ lab|capitalize }} Lab</h5>
-                  <p class="card-text">{{ lab_stats[lab] }} items</p>
-                  <a href="{{ url_for('main.lab_inventory', lab_name=lab) }}" class="btn btn-primary">
-                    View Inventory
-                  </a>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <h2>Welcome to AdZU SHS Laboratory Inventory</h2>
+  <p>This is the main dashboard.</p>
 </div>
 {% endblock %}

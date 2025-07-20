@@ -1,9 +1,8 @@
-/* static/js/analytics.js - simple fetch wrappers */
+/* static/js/analytics.js */
+/* Thin wrapper around the analytics endpoints */
 
 async function fetchChart(lab, endpoint) {
   const res = await fetch(`/api/analytics/${lab}/${endpoint}`);
+  if (!res.ok) throw new Error(res.statusText);
   return res.json();
 }
-
-// Example usage (Chart.js later):
-// fetchChart('chemistry', 'aging').then(console.log);

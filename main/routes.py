@@ -1,7 +1,17 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, redirect, url_for, session 
 
 main_bp = Blueprint('main', __name__)
 
-@main_bp.route('/')
+@main_bp.route("/")
 def index():
-    return render_template('index.html')
+    """Root entry point: auto-route by role."""
+    if "uid" not in session:
+        return redirect(url_for("auth.login"))
+
+    role = session["role"]
+    if role == "admin":
+        return redirect(url_for("admin.dashboard"))
+    elif role == "technician":
+        return redirect(url_for("tech.dashboard"))
+    else:                        # student / user
+        return redirect(url_for("user.dashboard"))

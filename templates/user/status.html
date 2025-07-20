@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>{{ request.view_args['lab_name']|capitalize }} Lab – Item Details</h2>
+
+  {% if item %}
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <tbody>
+          {% for k, v in item.items() %}
+          <tr>
+            <th class="w-25">{{ k|replace("_", " ")|title }}</th>
+            <td>{{ v or "-" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <a href="{{ url_for('user.lab_view', lab_name=request.view_args['lab_name']) }}"
+       class="btn btn-outline-secondary">← Back to list</a>
+  {% else %}
+    <div class="alert alert-warning">Item not found.</div>
+  {% endif %}
+</div>
+{% endblock %}

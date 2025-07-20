@@ -1,12 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, Response
+from flask import redirect, url_for
 import csv, json, io
 
 bp = Blueprint("main", __name__)
 
+
 @bp.route("/")
 def index():
-    stats = {lab: len(current_app.storage.list_items(lab)) for lab in ("physics", "chemistry", "biology")}
-    return render_template("index.html", labs=("physics", "chemistry", "biology"), lab_stats=stats)
+    return redirect(url_for("auth.login"))
 
 @bp.route("/lab/<lab_name>")
 def lab_inventory(lab_name):
@@ -81,3 +82,4 @@ def _export_csv(data, lab):
 def _export_json(data, lab):
     return Response(json.dumps(data, indent=2), mimetype="application/json",
                     headers={"Content-Disposition": f"attachment; filename={lab}.json"})
+

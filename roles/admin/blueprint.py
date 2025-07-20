@@ -1,16 +1,59 @@
-from flask import Blueprint, render_template, request
+# roles/admin/blueprint.py
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app
 from core.database import StorageManager
+from auth.models import User
 
-bp = Blueprint("admin", __name__, url_prefix="/admin")
+admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
-@bp.route("/")
+# ------------------------------------------------------------------
+# Helper
+# ------------------------------------------------------------------
+def _store() -> StorageManager:
+    return StorageManager(current_app.config['DATABASE_PATH'])
+
+def _users_store() -> StorageManager:
+    return StorageManager(current_app.config['USERS_PATH'])
+
+# ------------------------------------------------------------------
+# Routes
+# ------------------------------------------------------------------
+@admin_bp.route("/")
 def dashboard():
-    db = StorageManager("database.json")
-    labs = ("physics", "chemistry", "biology")
-    stats = {lab: len(db.list_items(lab)) for lab in labs}
-    return render_template("admin/dashboard.html", labs=labs, stats=stats)
+    labs = ["physics", "chemistry", "biology"]
+    stats = {lab: len(_store().list_items(lab)) for lab in labs}
+    users = _users_store().list_items("users")
+    return render_template("admin/dashboard.html", stats=stats, users=users)
 
-@bp.route("/lab/<lab_name>")
+
+@admin_bp.route("/lab/<lab_name>")
 def lab_view(lab_name):
-    items = StorageManager("database.json").list_items(lab_name)
-    return render_template("admin/lab.html", lab_name=lab_name, items=items)
+    items = [{"id": k, **v} for k, v in _store().list_items(lab_name).items()]
+    return render_template("admin/lab.html", lab=lab_name, items=items)
+
+
+@admin_bp.route("/user/add", methods=["GET", "POST"])
+def add_user():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        role = request.form["role"]
+        lab = request.form.get("lab") if role == "technician" else None
+
+        uid, existing = User.find(username, store=_users_store())
+        if existing:
+            flash("Username already exists", "danger")
+            return redirect(url_for("admin.add_user"))
+
+        user = User(username, password, role, lab)
+        user.save(store=_users_store())
+        flash("User created", "success")
+        return redirect(url_for("admin.dashboard"))
+
+    return render_template("admin/add_user.html")
+
+
+@admin_bp.route("/user/delete/<uid>")
+def delete_user(uid):
+    _users_store().delete_item("users", uid)
+    flash("User removed", "success")
+    return redirect(url_for("admin.dashboard"))

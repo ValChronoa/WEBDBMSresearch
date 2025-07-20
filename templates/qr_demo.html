@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>QR Demo</h2>
+
+  <!-- GENERATE BUTTON -->
+  <button class="btn btn-primary mb-3" onclick="makeQR('physics','a1b2c3d4')">
+    Generate QR for physics item
+  </button>
+  <img id="qr-img" class="d-block mb-4" style="max-width:200px;display:none;">
+
+  <!-- SCAN BUTTON -->
+  <button id="scan-btn" class="btn btn-success mb-3" onclick="startScanner(onScan)">
+    📷 Scan QR with camera
+  </button>
+  <video id="qr-video" class="d-block mb-4" style="max-width:300px;display:none;"></video>
+
+  <!-- Result -->
+  <div id="scanned-result" class="alert alert-info" style="display:none;"></div>
+</div>
+
+<script src="{{ url_for('static', filename='js/qr.js') }}"></script>
+<script>
+  function onScan(result) {
+    document.getElementById('scanned-result').style.display = 'block';
+    document.getElementById('scanned-result').innerText = 'Scanned: ' + result;
+    setTimeout(() => { window.location.href = result; }, 1000);
+  }
+</script>
+{% endblock %}

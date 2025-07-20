@@ -1,15 +1,45 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>{{ lab|capitalize }} Lab – Technician View</h2>
-<a href="{{ url_for('tech.export_csv', lab=lab) }}" class="btn btn-primary">Export CSV</a>
-<table class="table">
-  <thead><tr><th>ID</th><th>Name</th><th>Qty</th></tr></thead>
-  <tbody>
-  {% for item in items.items() %}
-    <tr>
-      <td>{{ item[0] }}</td><td>{{ item[1].name }}</td><td>{{ item[1].quantity }}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+<div class="container mt-4">
+  <h2>{{ lab|capitalize }} Lab – Technician View</h2>
+
+  <div class="mb-3">
+    <a href="{{ url_for('tech.export_csv', lab=lab) }}" class="btn btn-outline-primary">
+      Export CSV
+    </a>
+  </div>
+
+  {% if items %}
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Qty</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in items %}
+        <tr>
+          <td>{{ row.id }}</td>
+          <td>{{ row.name }}</td>
+          <td>{{ row.quantity }}</td>
+          <td>
+            <a href="{{ url_for('tech.invoice', lab=lab, item_id=row.id) }}"
+               class="btn btn-sm btn-success">Invoice</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="alert alert-info">
+    No items in this lab yet.
+  </div>
+  {% endif %}
+</div>
 {% endblock %}

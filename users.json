@@ -1,0 +1,39 @@
+{
+  "users": {
+    "530659bd": {
+      "id": "89914b7a",
+      "username": "student1",
+      "password_hash": "scrypt:32768:8:1$YshhgZfPug1Wppgc$1d82fbdfd0e454ffadb854f8328755d92a166778fa3be3c8efd0157e68af507938dbc8df2445b0be15ef0f110882bf1d9a091564d6818b71c4eb3d415ed8e66f",
+      "role": "user",
+      "lab": null
+    },
+    "552b13b8": {
+      "id": "bfed8708",
+      "username": "tech_phy",
+      "password_hash": "scrypt:32768:8:1$kOe5LPGAe7AFQqcF$70902820e1c6a260d6700c3c082b1b84aed38e6ea081ae76bd2478e8158471d5d65552c217f795edbf333f6b7c31ac9cadaf974ba5d7b9dc36b2583301b9bef8",
+      "role": "technician",
+      "lab": "physics"
+    },
+    "3e1bfa9c": {
+      "id": "d477dc7d",
+      "username": "tech_chem",
+      "password_hash": "scrypt:32768:8:1$hhcqOvUJdi1k0FY6$8838c724eb1ba1d12a80e93505aa9545ea99ffacccf5f8508ee8b9b72309188d6bfefb1a4e15688c5460dfb457e5b611843b0dee39d7195da9045b976ef9bde1",
+      "role": "technician",
+      "lab": "chemistry"
+    },
+    "dd908d67": {
+      "id": "b4c0f571",
+      "username": "tech_bio",
+      "password_hash": "scrypt:32768:8:1$7F7yXnCEubQPn4nB$09e16af235b2f0a734b30194df376ae6db85d68c2886655552bf50b268526ab87cf49c02a8d85d0f9fc74f48d87a62f222c96e9b4646b68c4893ce0b9e0bc221",
+      "role": "technician",
+      "lab": "biology"
+    },
+    "91d24284": {
+      "id": "c5aa6fad",
+      "username": "admin",
+      "password_hash": "scrypt:32768:8:1$EHlTldSSAfhW9Nav$c3764f23c164c0c968786a793d410914e22c3afa28d36242c35fa4f28e5ecbadcdc040eb797cec584fb87dfcbd14ac1e7d25ba2aa130ad4c30a6064d6b61475d",
+      "role": "admin",
+      "lab": null
+    }
+  }
+}

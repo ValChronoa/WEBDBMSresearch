@@ -9,40 +9,63 @@ SECRET = os.getenv("JWT_SECRET", "dev-secret")
 class User:
     ROLES = {"user", "technician", "admin"}
 
-    def __init__(self, username: str, password: str, role: str = "user", lab: str | None = None):
+    def __init__(
+        self,
+        username: str,
+        password: str,
+        role: str = "user",
+        lab: str | None = None,
+    ):
         if role not in self.ROLES:
             raise ValueError("Invalid role")
         self.id = uuid.uuid4().hex[:8]
         self.username = username
         self.password_hash = generate_password_hash(password)
         self.role = role
-        self.lab = lab  # only for technician
+        self.lab = lab
 
-    # --- CRUD helpers ---
+    # -------------------------
+    # CRUD helpers
+    # -------------------------
     @classmethod
-    def find(cls, username: str):
-        db = StorageManager("users.json")
-        users = db.list_items("users")
+    def find(cls, username: str, store: StorageManager):
+        """
+        Return (uid, User) for the given username.
+        Uses the StorageManager provided by the caller.
+        """
+        users = store.list_items("users")
         for uid, data in users.items():
-            if data["username"] == username:
-                return uid, User(**data)
+            if data.get("username") == username:
+                # Build User without re-hashing password
+                user = cls.__new__(cls)
+                user.id = uid
+                for k, v in data.items():
+                    setattr(user, k, v)
+                return uid, user
         return None, None
 
     @classmethod
-    def find_by_id(cls, uid: str):
-        db = StorageManager("users.json")
-        data = db.list_items("users").get(uid)
-        return User(**data) if data else None
+    def find_by_id(cls, uid: str, store: StorageManager):
+        data = store.list_items("users").get(uid)
+        if not data:
+            return None
+        user = cls.__new__(cls)
+        user.id = uid
+        for k, v in data.items():
+            setattr(user, k, v)
+        return user
 
-    def save(self):
-        db = StorageManager("users.json")
-        db.add_item("users", self.__dict__)
+    def save(self, store: StorageManager):
+        """Persist this user via the provided StorageManager."""
+        store.add_item("users", self.__dict__)
 
-    # --- JWT helpers ---
+    # -------------------------
+    # JWT helpers
+    # -------------------------
     @classmethod
-    def decode_token(cls, token: str):
+    def decode_token(cls, token: str, store: StorageManager):
         try:
             payload = jwt.decode(token, SECRET, algorithms=["HS256"])
-            return cls.find_by_id(payload["sub"])
+            return cls.find_by_id(payload["sub"], store=store)
         except jwt.ExpiredSignatureError:
             return None

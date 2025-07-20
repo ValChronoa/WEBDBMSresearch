@@ -1,9 +1,9 @@
-from dataclasses import dataclass
 import os
+from pathlib import Path
 
-@dataclass  # <-- remove slots=True
 class Config:
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "dev-key-change-me")
-    DATABASE_PATH: str = os.getenv("DATABASE_PATH", "database.json")
-    THEME_DIR: str = os.getenv("THEME_DIR", "themes")
-    STATIC_THEME_DIR: str = os.getenv("STATIC_THEME_DIR", "static/themes")
+    SECRET_KEY           = os.getenv("SECRET_KEY") or "dev-secret-change-me"
+    DATABASE_PATH        = os.getenv("DATABASE_PATH") or "database.json"
+    USERS_PATH           = os.getenv("USERS_PATH") or "users.json"
+    THEME_DIR            = os.getenv("THEME_DIR") or "static/themes"
+    STATIC_THEME_DIR     = os.getenv("STATIC_THEME_DIR") or "static/css/themes"

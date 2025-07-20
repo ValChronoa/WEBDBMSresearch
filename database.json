@@ -12,7 +12,11 @@
       "condition": "Good",
       "current_user": null,
       "usage_log": "Weekly practicals",
-      "notes": "Wipe clean after use"
+      "notes": "Wipe clean after use",
+      "borrowed_by":  null,        
+      "borrowed_on":  null,       
+      "returned_on":  null,       
+      "return_notes": null       
     }
   },
   "chemistry": {
@@ -32,7 +36,11 @@
       "distributor_phone": "+63-2-555-1234",
       "date_purchased": "2024-03-15",
       "date_opened": "2024-04-01",
-      "expiration_date": "2026-03-15"
+      "expiration_date": "2026-03-15",
+      "borrowed_by":  null,        
+      "borrowed_on":  null,       
+      "returned_on":  null,       
+      "return_notes": null  
     }
   },
   "biology": {
@@ -50,7 +58,11 @@
       "last_used": "2024-05-20",
       "used_by": "Grade 11 STEM",
       "disposal_method": "Glass waste",
-      "notes": "Handle with forceps only"
+      "notes": "Handle with forceps only",
+      "borrowed_by":  null,        
+      "borrowed_on":  null,       
+      "returned_on":  null,       
+      "return_notes": null  
     }
   }
 }
